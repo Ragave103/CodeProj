@@ -11,7 +11,7 @@ def members():
 
 @app.route("/api/code",methods=['POST'])
 def code():
-  openai.api_key = "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"
+  openai.api_key = "apikey"
   data = request.get_json()
   choice = data.get('choice','')
   program = data.get('program','')
