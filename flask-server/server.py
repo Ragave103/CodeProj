@@ -1,26 +1,32 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify,request
 from flask_cors import CORS 
-import os
 import openai
-
 app = Flask(__name__)
 
-CORS(app, resources={r"/api/*": {"origins": "*"}})  
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
 
 @app.route("/api/members")
 def members():
     return jsonify({"members": "member123"})
 
-@app.route("/api/code")
+@app.route("/api/code",methods=['POST'])
 def code():
-  openai.api_key = "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"
+  openai.api_key = "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"
+  data = request.get_json()
+  choice = data.get('choice','')
+  program = data.get('program','')
+  if not choice or not program:
+        return jsonify({"error": "Invalid data sent from the frontend"}), 400
+
+  
+  prompt = f"Act as a senior programmer who gives comments does not give any descriptions .Generate only code for{choice} program to {program}. There should no description strictly"
 
   response = openai.ChatCompletion.create(
   model="gpt-3.5-turbo-16k-0613",
   messages=[
     {
       "role": "user",
-      "content": "Act as a senior programmer who does not give any descriptions.Generate only code for python program to find odd or even number. There should no description strictly"
+      "content": prompt
     }
   ],
   temperature=0.83,
@@ -31,6 +37,14 @@ def code():
   )
   resp = response.choices[0].message.content
   list = resp.splitlines()
+  for i in range(2):
+    index_to_remove = next((i for i, elem in enumerate(list) if "```" in elem), None)
+
+    if index_to_remove is not None:
+        if i == 0:
+            list = list[index_to_remove + 1 :]
+        else:
+            list = list[:index_to_remove]
   return jsonify({"code": list})
 
 

@@ -31,9 +31,16 @@ function CodeEditor() {
     }
   };
 
+  const data = { choice: "C++", program: "reverse a number" };
   const generateCode = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/code");
+      const response = await fetch("http://localhost:5000/api/code", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
 
       if (response.ok) {
         const data = await response.json();
