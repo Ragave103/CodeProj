@@ -11,7 +11,7 @@ def members():
 
 @app.route("/api/code",methods=['POST'])
 def code():
-  openai.api_key = "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"
+  openai.api_key = "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"
   data = request.get_json()
   choice = data.get('choice','')
   program = data.get('program','')
@@ -19,7 +19,7 @@ def code():
         return jsonify({"error": "Invalid data sent from the frontend"}), 400
 
   
-  prompt = f"Act as a senior programmer who gives comments does not give any descriptions .Generate only code for{choice} program to {program}. There should no description strictly"
+  prompt = f"Generate only code for{choice} program to {program}. There should no description strictly"
 
   response = openai.ChatCompletion.create(
   model="gpt-3.5-turbo-16k-0613",
@@ -51,3 +51,4 @@ def code():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
