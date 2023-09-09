@@ -1,7 +1,10 @@
-from flask import Flask, jsonify,request
+from flask import Flask, jsonify , request
 from flask_cors import CORS 
+from flask_cors import cross_origin
 import openai
+from transformers import pipeline
 app = Flask(__name__)
+speechRecognizer = pipeline("automatic-speech-recognition", model="facebook/wav2vec2-base-960h")
 
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
 
@@ -11,7 +14,7 @@ def members():
 
 @app.route("/api/code",methods=['POST'])
 def code():
-  openai.api_key = "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"
+  openai.api_key = "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"
   data = request.get_json()
   choice = data.get('choice','')
   program = data.get('program','')
@@ -46,6 +49,22 @@ def code():
         else:
             list = list[:index_to_remove]
   return jsonify({"code": list})
+
+@app.route("/api/transcribe",methods=['POST'])
+def transcribe_audio():
+  try:
+    print("Received POST request to /api/transcribe")
+    print("Request Headers:", request.headers)
+    data = request.audioBlob
+    print(data)
+    
+    
+    text_transcribe = "Reached backend successfully"
+    return jsonify({"transcription": text_transcribe})
+
+  except Exception as e:
+    print("Error:", str(e))
+    return jsonify({"error": str(e)}), 500
 
 
 
