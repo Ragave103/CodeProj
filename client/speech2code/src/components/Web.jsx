@@ -381,7 +381,15 @@ const Web = () => {
               <div className="container  basis-1/3 bg-cyan-950 h-screen">
                 <div className=" flex-col h-screen">
                   <div className="flex-1 p-4  h-1/2">
-                    OUTPUT{" "}
+                    <h1 className=" text-4xl text-slate-50 text-center">
+                      OUTPUT
+                    </h1>
+                    <textarea
+                      className="textStyles text-2xl flex-grow textStyle focus:outline-none hover:outline-none   p-2 rounded-md"
+                      styles="textStyles"
+                      value={program}
+                      onChange={(e) => handleCodeChange(e.target.value)}
+                    />
                     <textarea
                       value={DecodedOutput}
                       readOnly={DecodedOutput === "Initial Output"}
@@ -389,7 +397,9 @@ const Web = () => {
                     <button onClick={handleCompile}>Compile and Run</button>
                   </div>
                   <div className="flex-1 p-4 ">
-                    <h1 className=" text-2xl text-white">INPUT</h1>
+                    <h1 className=" text-4xl text-slate-50 text-center">
+                      INPUT
+                    </h1>
                     <textarea
                       value={inputValue}
                       onChange={handleInputChange}
