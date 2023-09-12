@@ -1,5 +1,5 @@
 .flowbg {
-  background-color: #1c0933;
+  background-color: cc;
 }
 
 .input-prompt-div {
@@ -28,10 +28,80 @@
   background-color: #282425;
   color: #45dede;
 }
+.input-text-styles {
+  color: black;
+  width: 41rem;
+  height: 20rem;
+}
 
+.input-text-styles-output {
+  color: black;
+  width: 41rem;
+  height: 22rem;
+}
 .selectstyles {
-  background-color: #45dede;
-  width: 20vh;
-  height: 5vh;
+  background: linear-gradient(to left, #087ee1, #05e8ba);
+
+  width: 23rem;
+  border: none;
+  border: 1px solid white;
+  height: 3.5rem;
   color: #282425;
+  font-weight: bold;
+}
+
+.selectstyles:hover {
+  background: linear-gradient(to left, #087ee1, #05e8ba);
+  width: 25rem;
+  height: 3.5rem;
+  font-weight: bold;
+  border: 1px solid white;
+}
+.selectstyles:focus {
+  background: linear-gradient(to left, #087ee1, #05e8ba);
+  width: 25rem;
+  height: 3.5rem;
+  font-weight: bold;
+  border: 1px solid white;
+}
+
+.compile {
+  width: 20rem;
+}
+
+.gradient-button {
+  background: linear-gradient(to left, #087ee1, #05e8ba);
+  border: 1px solid transparent;
+  color: #1e293b;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: 0.3s;
+  font-weight: bold;
+}
+
+.gradient-button:hover {
+  background: linear-gradient(
+    to left,
+    #05e8ba,
+    #087ee1
+  ); /* Add your desired gradient colors here */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.send-btn {
+  margin-left: 13rem;
+}
+
+.input-cmd {
+  height: 25rem;
+}
+
+.output-cmd {
+  height: 32rem;
 }
