@@ -1,6 +1,11 @@
-from flask import Flask, jsonify,request
+from flask import Flask, jsonify , request
 from flask_cors import CORS 
+from flask_cors import cross_origin
 import openai
+from pydub import AudioSegment
+AudioSegment.ffmpeg = "C:\\ffmpeg-6.0-essentials_build\\bin\\ffmpeg.exe"
+import speech_recognition as sr
+
 app = Flask(__name__)
 
 CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
@@ -11,7 +16,7 @@ def members():
 
 @app.route("/api/code",methods=['POST'])
 def code():
-  openai.api_key = "<API KEY>"
+  openai.api_key = "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"
   data = request.get_json()
   choice = data.get('choice','')
   program = data.get('program','')
@@ -47,8 +52,38 @@ def code():
             list = list[:index_to_remove]
   return jsonify({"code": list})
 
+@app.route("/api/transcribe",methods=['POST'])
+def transcribe_audio():
+  try:
+    print("Received POST request to /api/transcribe")
+    print("Request Headers:", request.headers)
+    data = request.files.get("audioBlob")
+    print(data)
+    print("got data")
+    
+    audio = AudioSegment.from_file(data,format='webm')
+    conv_audio=audio.export('temp.wav',format='wav')
+    print("audio converted")
+    
+    recognizer = sr.Recognizer()
+    print("Recognizer created")
+    with sr.AudioFile(conv_audio) as source:
+      audio_data=recognizer.record(source)
+    print("audio data created")
+    
+    text_transcribe = "Reached back end"
+    
+    text_transcribe=recognizer.recognize_google(audio_data)
+    
+    print("transcribed using google")
+    print(text_transcribe)
+    return jsonify({"text": text_transcribe})
+
+  except Exception as e:
+    print("Error:", str(e))
+    return jsonify({"error": str(e)}), 500
+
 
 
 if __name__ == "__main__":
     app.run(debug=True)
-
